@@ -1,5 +1,8 @@
 <h2 align="center">Comment Bot for Facebook Groups</h2>
 <p>This repository contains the source code for a comment bot designed to interact with Facebook groups. The bot automates the process of commenting on posts within specified groups, facilitating engagement and interaction within the community.</p>
+<div align="center">
+<img src="img/demo1.png" width="240" height="240" />
+</div>
 
 <h3>Features</h3>
 <ul>
@@ -10,6 +13,7 @@
         Customizable Settings: Users can configure various parameters such as comment frequency, content, and targeting specific groups.
     </li>
 </ul>
+
 <h3>How Install?</h3>
 <h4>Clone Repo</h4>
 <pre>
@@ -19,6 +23,7 @@ git clone https://github.com/Latip176/comment-bot-group-facebook
 <pre>
 python3 -m pip install -r requirements.txt
 </pre>
+
 <h3>Run Script</h3>
 <pre>
 python run.py
