@@ -5,8 +5,8 @@ from .get_group import Group
 
 
 class SpamComment(Group):
-    def __init__(self, cookie: str) -> None:
-        super().__init__(cookie=cookie)
+    def __init__(self, session: requests.Session(), cookie: str) -> None:
+        super().__init__(session=session, cookie=cookie)
 
     def PostComment(self, url: str, comment: str, file: str) -> bool:
         attachments = self.GetAttachments(url=url)
@@ -22,7 +22,7 @@ class SpamComment(Group):
         }
         data_attachments["comment_text"] = comment
         files = {"photo": open(file, "rb")}
-        post_comment = requests.post(
+        post_comment = self.session.post(
             form_attachments["action"],
             data=data_attachments,
             files=files,
@@ -35,9 +35,9 @@ class SpamComment(Group):
         return True
 
     def GetAttachments(self, url: str) -> str:
-        session = requests.Session()
-        session.headers.update({"Host": "mbasic.facebook.com"})
-        soup = BeautifulSoup(session.get(url, cookies=self.cookies).text, "html.parser")
+        soup = BeautifulSoup(
+            self.session.get(url, cookies=self.cookies).text, "html.parser"
+        )
         form = soup.find("form", attrs={"method": "post"})
         data = {
             x.get("name"): x.get("value")
@@ -45,11 +45,11 @@ class SpamComment(Group):
         }
         data["view_photo"] = "Lampirkan Foto"
 
-        attachments = session.post(
+        attachments = self.session.post(
             f"https://{self.host}{form['action']}", cookies=self.cookies, data=data
         )
         target_id = re.findall("ft_ent_identifier=(.*)&", str(form["action"]))[0]
-        attachments = session.get(
+        attachments = self.session.get(
             f"https://mbasic.facebook.com/mbasic/comment/advanced/?target_id={target_id}&pap=1&at=compose&photo_comment=1",
             cookies=self.cookies,
         )

@@ -3,6 +3,7 @@ from os import system
 from app import Group
 from app import SpamComment
 from app import check_cookie
+from app import session
 
 
 import platform
@@ -33,7 +34,9 @@ def main():
     for _ in range(int(len_target)):
         target = input(f" {_+1} >> URL group: ")
         count_post = int(input(" >> JUMLAH post: "))
+        print(" @ path file foto (wajib)")
         foto = input(" >> File Foto: ")
+        print(" @ multi komen pisah pake '|' (komen1 | komen2)")
         comments = input(" >> COMMENTS: ").split("|")
         posts.append(
             {
@@ -55,18 +58,19 @@ def main():
         comments = post["comments"]
         file = post["file"]
 
-        Start = SpamComment(cookie=cookies)
+        Start = SpamComment(session=session, cookie=cookies)
         InfoGroup = Start.GetInfoGroup(url=target, count=count_post)
         if InfoGroup == False:
             print(" Group Tidak Ditemukan ")
             break
-        print(f"\n # Name Group: {InfoGroup['name']}")
-
         urls = InfoGroup["urls"]
+        print(f"\n # Name Group: {InfoGroup['name']}")
+        print(f" # Post di dapatkan: {len(urls)}")
+
         for i in range(len(comments)):
             for j in range(len(urls)):
                 url = urls[j]
-                comment = comments[i]
+                comment = comments[i].strip()
                 time = datetime.now()
                 if Start.PostComment(url=url, comment=comment, file=file):
                     print(
