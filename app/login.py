@@ -8,8 +8,10 @@ session = requests.Session()
 
 
 # auto change language to Indonesian language
-def change_language() -> bool:
-    response = session.get("https://mbasic.facebook.com/language/?paipv=0")
+def change_language(cookie: str) -> bool:
+    response = session.get(
+        "https://mbasic.facebook.com/language/?paipv=0", cookies={"cookie": cookie}
+    )
     soup = BeautifulSoup(response.text, "html.parser")
     form = soup.find(
         "form",
@@ -24,7 +26,9 @@ def change_language() -> bool:
     }
     if (
         session.post(
-            "https://mbasic.facebook.com" + str(form["action"]), data=data
+            "https://mbasic.facebook.com" + str(form["action"]),
+            data=data,
+            cookies={"cookie": cookie},
         ).status_code
         != 200
     ):
@@ -38,7 +42,7 @@ def check_cookie(cookie: str) -> bool:
         "https://mbasic.facebook.com/", cookies={"cookie": cookie}
     )
     if "mbasic_logout_button" in str(request_web.text):
-        if change_language() == False:
+        if change_language(cookie=cookie) == False:
             print(" #@ Change Language Failed")
             return False
         return True
