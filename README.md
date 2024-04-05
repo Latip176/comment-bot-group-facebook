@@ -1,8 +1,8 @@
 <h2 align="center">Comment Bot for Facebook Groups</h2>
+<p>This repository contains the source code for a comment bot designed to interact with Facebook groups. The bot automates the process of commenting on posts within specified groups, facilitating engagement and interaction within the community.</p>
 <div align="center">
 <img src="img/demo1.png" width="100%" />
 </div>
-<p>This repository contains the source code for a comment bot designed to interact with Facebook groups. The bot automates the process of commenting on posts within specified groups, facilitating engagement and interaction within the community.</p>
 
 <h3>Features</h3>
 <ul>
