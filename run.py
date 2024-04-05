@@ -25,7 +25,7 @@ def main():
     print(
         """
     Spam Comment Post Group
-  Author: Latip176 | Version: v1.1
+  Author: Latip176 | Version: v1.2
 """
     )
 
